@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_01_092249) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_01_174746) do
   create_table "access_logs", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "access_point_id", null: false
@@ -42,14 +42,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_092249) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "encrypted_password"
+    t.string "username", null: false
     t.string "full_name"
-    t.string "email"
+    t.string "email", null: false
+    t.string "encrypted_password", null: false
     t.integer "role", default: 0, null: false
     t.integer "access_level"
     t.datetime "last_login"
-    t.boolean "status"
+    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "reset_password_token"
