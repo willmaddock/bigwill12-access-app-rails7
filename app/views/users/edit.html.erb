@@ -1,0 +1,16 @@
+<h1>Editing User</h1>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% elsif flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<p>Please make the necessary changes to the user details below:</p>
+
+<%= render "form", user: @user %>
+
+<div class="mt-3">
+  <%= link_to "Show this User", @user, class: "btn btn-info" %> |
+  <%= link_to "Back to Users", users_path, class: "btn btn-secondary" %>
+</div>

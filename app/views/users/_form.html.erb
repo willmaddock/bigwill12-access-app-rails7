@@ -1,0 +1,59 @@
+<%= form_with(model: user, url: user.persisted? ? user_path(user) : admin_create_user_path, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% user.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :username, class: "form-label" %>
+    <%= form.text_field :username, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password, class: "form-label" %>
+    <%= form.password_field :password, class: "form-control" %>
+    <small class="form-text text-muted">Leave blank if you do not want to change the password. A default password will be set if none is provided.</small>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :full_name, class: "form-label" %>
+    <%= form.text_field :full_name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control", required: true %>
+  </div>
+
+  <!-- Dropdown for Role -->
+  <div class="mb-3">
+    <%= form.label :role, class: "form-label" %>
+    <%= form.select :role, User.roles.keys.map { |r| [r.humanize, r] }, { include_blank: true }, class: "form-control" %>
+  </div>
+
+  <!-- Dropdown for Access Level -->
+  <div class="mb-3">
+    <%= form.label :access_level, class: "form-label" %>
+    <%= form.select :access_level, options_for_select(['1', '2', '3', '4', '5'], user.access_level), {}, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :last_login, class: "form-label" %>
+    <%= form.datetime_field :last_login, class: "form-control", value: user.last_login.try(:strftime, '%Y-%m-%d %H:%M') %>
+  </div>
+
+  <div class="mb-3 form-check">
+    <%= form.check_box :status, class: "form-check-input" %>
+    <%= form.label :status, "Active?", class: "form-check-label" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

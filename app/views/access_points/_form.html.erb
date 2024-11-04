@@ -1,0 +1,52 @@
+<%= form_with(model: access_point, local: true) do |form| %>
+  <% if access_point.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(access_point.errors.count, "error") %> prohibited this access point from being saved:</h2>
+      <ul>
+        <% access_point.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :location %>
+    <%= form.text_field :location, class: "form-control #{'is-invalid' if access_point.errors[:location].any?}", placeholder: 'Enter the location' %>
+    <% if access_point.errors[:location].any? %>
+      <div class="invalid-feedback">
+        <%= access_point.errors[:location].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Dropdown for Access Level -->
+  <div class="form-group">
+    <%= form.label :access_level, class: "form-label" %>
+    <%= form.select :access_level, options_for_select(['1', '2', '3', '4', '5'], access_point.access_level), {}, class: "form-control #{'is-invalid' if access_point.errors[:access_level].any?}" %>
+    <% if access_point.errors[:access_level].any? %>
+      <div class="invalid-feedback">
+        <%= access_point.errors[:access_level].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control #{'is-invalid' if access_point.errors[:description].any?}", rows: 3, placeholder: 'Enter a description' %>
+    <% if access_point.errors[:description].any? %>
+      <div class="invalid-feedback">
+        <%= access_point.errors[:description].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group form-check">
+    <%= form.check_box :status, class: 'form-check-input' %>
+    <%= form.label :status, 'Active', class: 'form-check-label' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

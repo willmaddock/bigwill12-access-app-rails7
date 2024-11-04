@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Devise routes for user authentication
+  devise_for :users
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Custom route for admin user creation, to avoid conflict with Devise
+  post 'users/admin_create', to: 'users#create', as: 'admin_create_user'
+
+  # Resources for the application
+  resources :access_logs
+  resources :access_points
+  resources :profiles
+  resources :users, except: :create  # Exclude the default create route for users
+
+  # Health check route
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Define the root path route
+  root "users#index"  # Setting the home page to the users index action
 end
