@@ -78,4 +78,5 @@ group :test do
   gem "selenium-webdriver"
 end
 
+# Add RSpec for testing
 gem "rspec-rails", "~> 7.0", groups: [:development, :test]
